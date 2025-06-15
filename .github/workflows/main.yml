@@ -21,24 +21,16 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           set -euxo pipefail
-    
+
           cd ${{ secrets.PROJECT_PATH }}
           git fetch origin
           git reset --hard origin/master
           git clean -fd
-    
+
           sudo docker-compose down || true
           sudo docker-compose build --no-cache
           sudo docker-compose up -d
-    
-          # Update these paths to match your structure
+
+          # Migrate & (re-)collect static
           sudo docker-compose exec -T web python manage.py migrate --noinput
           sudo docker-compose exec -T web python manage.py collectstatic --noinput --clear
-          
-    - name: Debug Paths
-      run: |
-        ssh -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-        cd ${{ secrets.PROJECT_PATH }}
-        docker-compose exec web sh -c "pwd && ls -la && ls -la /code"
-        exit
-        EOF
