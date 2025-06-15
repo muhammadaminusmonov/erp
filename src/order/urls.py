@@ -16,3 +16,10 @@
 #     path('<int:pk>/delete/', order_delete, name='order_delete'),
 #     path('<int:pk>/status/<str:status>/', update_order_status, name='update_order_status'),
 # ]
+
+from django.urls import path
+from .views import order
+
+urlpatterns = [
+    path('', order, name='order'),
+]

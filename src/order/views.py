@@ -123,3 +123,12 @@
 #         order.save()
 #
 #     return redirect('order_detail', pk=order.pk)
+
+from django.shortcuts import render, redirect, get_object_or_404
+
+from order.models import Order
+
+
+def order(request):
+    ctx = {}
+    return render(request, 'order.html')
