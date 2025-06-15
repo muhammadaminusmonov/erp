@@ -6,51 +6,44 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Explicitly using Ubuntu 24.04
     timeout-minutes: 15
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Add EC2 to known hosts
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_HOST }} ecdsa-sha2-nistp256 AAAAB3NzaC1yc2EAAAADAQABAAABAQC..." >> ~/.ssh/known_hosts
-        # Tip: Generate this properly with: ssh-keyscan your-ec2-ip | base64 -w0
-
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.8.1
+    - name: Setup SSH Agent
+      uses: webfactory/ssh-agent@v0.9.0  # Updated to latest version
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Configure Known Hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
     - name: Deploy via SSH
-      uses: appleboy/ssh-action@v1
+      uses: appleboy/ssh-action@v1.1.0  # Updated to latest version
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         script: |
-          set -euxo pipefail  # Enable debugging and strict error handling
+          set -euxo pipefail
           
           # Navigate to project
           cd ${{ secrets.PROJECT_PATH }}
           
-          # Clean git operations (Amazon Linux sometimes has old git)
-          sudo yum update -y git || true
+          # Ensure clean working directory
           git fetch origin
-          git checkout master --force
           git reset --hard origin/master
-          
-          # Fix potential permissions (Amazon Linux specific)
-          sudo chown -R ec2-user:ec2-user .
-          find . -type d -exec chmod 755 {} \;
-          find . -type f -exec chmod 644 {} \;
+          git clean -fd
           
           # Docker operations
           sudo docker-compose down || true
           sudo docker-compose build --no-cache
           sudo docker-compose up -d
           
-          # Django specific
+          # Django maintenance
           sudo docker-compose exec -T web python manage.py migrate --noinput
           sudo docker-compose exec -T web python manage.py collectstatic --noinput --clear
