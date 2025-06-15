@@ -13,37 +13,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup SSH Agent
-      uses: webfactory/ssh-agent@v0.9.0  # Updated to latest version
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Configure Known Hosts
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
     - name: Deploy via SSH
-      uses: appleboy/ssh-action@v1.1.0  # Updated to latest version
+      uses: appleboy/ssh-action@v1.1.0
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}   # <-- PASS the key directly
         script: |
           set -euxo pipefail
-          
-          # Navigate to project
+    
           cd ${{ secrets.PROJECT_PATH }}
-          
-          # Ensure clean working directory
           git fetch origin
           git reset --hard origin/master
           git clean -fd
-          
-          # Docker operations
+    
           sudo docker-compose down || true
           sudo docker-compose build --no-cache
           sudo docker-compose up -d
-          
-          # Django maintenance
+    
           sudo docker-compose exec -T web python manage.py migrate --noinput
           sudo docker-compose exec -T web python manage.py collectstatic --noinput --clear
+
