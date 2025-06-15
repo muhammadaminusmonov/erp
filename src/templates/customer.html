@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers | StitchERP</title>
+    <style>
+        :root {
+            --primary: #6C4AB6;
+            --secondary: #8D72E1;
+            --accent: #B9E0FF;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --success: #4BB543;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --info: #17A2B8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar (same as dashboard) */
+        .sidebar {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+        }
+        
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-item.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        /* Customers Page Specific Styles */
+        .customers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .customer-tools {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(140, 114, 225, 0.2);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a3d9d;
+        }
+        
+        /* Customer Segments */
+        .customer-segments {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .segment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .segment-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .segment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .segment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .icon-new {
+            background-color: rgba(108, 74, 182, 0.1);
+            color: var(--primary);
+        }
+        
+        .icon-regular {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .icon-vip {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+        
+        .icon-inactive {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+        
+        .segment-info h3 {
+            font-size: 0.95rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+        
+        .segment-info .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        /* Customers Table */
+        .customers-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 0.9rem;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .customer-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .customer-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .customer-info p {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .segment-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .segment-new {
+            background-color: rgba(108, 74, 182, 0.1);
+            color: var(--primary);
+        }
+        
+        .segment-regular {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .segment-vip {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+        
+        .segment-inactive {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+        
+        .stats-cell {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 1rem;
+            margin-right: 0.75rem;
+            transition: color 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary);
+        }
+        
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #f1f1f1;
+        }
+        
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .page-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            background: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .page-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .page-btn:hover:not(.active) {
+            background-color: #f1f1f1;
+        }
+        
+        .results-count {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        /* Customer Activity Chart */
+        .customer-activity {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .activity-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .activity-period {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .period-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            background: none;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .period-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .chart-placeholder {
+            height: 250px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+<!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
+                <h1>StitchERP</h1>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="{% url 'dashboard' %}" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'product' %}" class="nav-link">
+                        <i class="fas fa-tshirt"></i>
+                        Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'order' %}" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'customer' %}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        Customers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'inventory' %}" class="nav-link">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="page-title">
+                    <h2>Customer Management</h2>
+                    <p>View and manage your customer database and segments</p>
+                </div>
+                
+                <div class="user-profile">
+                    <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
+                    <span>Usmonov Muhammadamin</span>
+                </div>
+            </div>
+            
+            <!-- Customer Activity Chart -->
+            <div class="customer-activity">
+                <div class="activity-header">
+                    <h3>Customer Acquisition</h3>
+                    <div class="activity-period">
+                        <button class="period-btn active">Week</button>
+                        <button class="period-btn">Month</button>
+                        <button class="period-btn">Year</button>
+                    </div>
+                </div>
+                
+                <div class="chart-placeholder">
+                    [Customer Acquisition Chart Visualization]
+                </div>
+            </div>
+            
+            <!-- Customer Segments -->
+            <div class="customer-segments">
+                <div class="segment-card">
+                    <div class="segment-header">
+                        <div class="segment-icon icon-new">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="segment-info">
+                            <h3>New Customers</h3>
+                            <div class="value">24</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-card">
+                    <div class="segment-header">
+                        <div class="segment-icon icon-regular">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="segment-info">
+                            <h3>Regular Customers</h3>
+                            <div class="value">156</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-card">
+                    <div class="segment-header">
+                        <div class="segment-icon icon-vip">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="segment-info">
+                            <h3>VIP Customers</h3>
+                            <div class="value">32</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-card">
+                    <div class="segment-header">
+                        <div class="segment-icon icon-inactive">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <div class="segment-info">
+                            <h3>Inactive Customers</h3>
+                            <div class="value">45</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="customers-header">
+                <div class="customer-tools">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search customers...">
+                    </div>
+                    
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">
+                            <i class="fas fa-filter"></i>
+                            Filters
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Add Customer
+                </button>
+            </div>
+            
+            <div class="customers-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Segment</th>
+                            <th>Orders</th>
+                            <th>Total Spent</th>
+                            <th>Last Purchase</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar">JD</div>
+                                    <div class="customer-info">
+                                        <h4>John Doe</h4>
+                                        <p>john@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="segment-badge segment-vip">VIP</span></td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">12</span>
+                                    <span class="stat-label">5 this month</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">$1,842</span>
+                                    <span class="stat-label">$489 this month</span>
+                                </div>
+                            </td>
+                            <td>Jun 14, 2023</td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-cell">
+                                    <img src="https://via.placeholder.com/40" class="customer-avatar" alt="Customer">
+                                    <div class="customer-info">
+                                        <h4>Alice Smith</h4>
+                                        <p>alice@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="segment-badge segment-regular">Regular</span></td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">6</span>
+                                    <span class="stat-label">2 this month</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">$489</span>
+                                    <span class="stat-label">$149 this month</span>
+                                </div>
+                            </td>
+                            <td>Jun 10, 2023</td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar">RJ</div>
+                                    <div class="customer-info">
+                                        <h4>Robert Johnson</h4>
+                                        <p>robert@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="segment-badge segment-new">New</span></td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">1</span>
+                                    <span class="stat-label">1 this month</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">$129</span>
+                                    <span class="stat-label">$129 this month</span>
+                                </div>
+                            </td>
+                            <td>Jun 8, 2023</td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar">MB</div>
+                                    <div class="customer-info">
+                                        <h4>Maria Brown</h4>
+                                        <p>maria@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="segment-badge segment-regular">Regular</span></td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">8</span>
+                                    <span class="stat-label">1 this month</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">$672</span>
+                                    <span class="stat-label">$95 this month</span>
+                                </div>
+                            </td>
+                            <td>May 28, 2023</td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="customer-cell">
+                                    <div class="customer-avatar">DW</div>
+                                    <div class="customer-info">
+                                        <h4>David Wilson</h4>
+                                        <p>david@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="segment-badge segment-inactive">Inactive</span></td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">3</span>
+                                    <span class="stat-label">0 this month</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="stats-cell">
+                                    <span class="stat-value">$247</span>
+                                    <span class="stat-label">$0 this month</span>
+                                </div>
+                            </td>
+                            <td>Mar 15, 2023</td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="table-footer">
+                    <div class="results-count">
+                        Showing 1 to 5 of 257 customers
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">4</button>
+                        <button class="page-btn">5</button>
+                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

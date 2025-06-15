@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory | StitchERP</title>
+    <style>
+        :root {
+            --primary: #6C4AB6;
+            --secondary: #8D72E1;
+            --accent: #B9E0FF;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --success: #4BB543;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --info: #17A2B8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar (same as dashboard) */
+        .sidebar {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+        }
+        
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-item.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        /* Inventory Page Specific Styles */
+        .inventory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .inventory-tools {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(140, 114, 225, 0.2);
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a3d9d;
+        }
+        
+        /* Inventory Summary */
+        .inventory-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .summary-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .summary-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .icon-total {
+            background-color: rgba(108, 74, 182, 0.1);
+            color: var(--primary);
+        }
+        
+        .icon-low {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+        
+        .icon-value {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .icon-categories {
+            background-color: rgba(23, 162, 184, 0.1);
+            color: var(--info);
+        }
+        
+        .summary-info h3 {
+            font-size: 0.95rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+        
+        .summary-info .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        /* Inventory Table */
+        .inventory-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 0.9rem;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .product-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .product-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .product-info p {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .stock-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .stock-level {
+            height: 6px;
+            flex-grow: 1;
+            background-color: #f1f1f1;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .stock-progress {
+            height: 100%;
+            border-radius: 3px;
+        }
+        
+        .progress-high {
+            background-color: var(--success);
+            width: 80%;
+        }
+        
+        .progress-medium {
+            background-color: var(--warning);
+            width: 45%;
+        }
+        
+        .progress-low {
+            background-color: var(--danger);
+            width: 15%;
+        }
+        
+        .stock-value {
+            min-width: 30px;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .status-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #e6f7ee;
+            color: var(--success);
+        }
+        
+        .status-inactive {
+            background-color: #fce8e6;
+            color: var(--danger);
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 1rem;
+            margin-right: 0.75rem;
+            transition: color 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary);
+        }
+        
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #f1f1f1;
+        }
+        
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .page-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            background: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .page-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .page-btn:hover:not(.active) {
+            background-color: #f1f1f1;
+        }
+        
+        .results-count {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        /* Inventory Value Chart */
+        .inventory-value {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+        
+        .value-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .value-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .value-period {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .period-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            background: none;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .period-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .chart-placeholder {
+            height: 250px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adb5bd;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+<!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
+                <h1>StitchERP</h1>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="{% url 'dashboard' %}" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'product' %}" class="nav-link">
+                        <i class="fas fa-tshirt"></i>
+                        Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'order' %}" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'customer' %}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        Customers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'inventory' %}" class="nav-link">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="page-title">
+                    <h2>Inventory Management</h2>
+                    <p>Track and manage your clothing inventory across all locations</p>
+                </div>
+                
+                <div class="user-profile">
+                    <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
+                    <span>Usmonov Muhammadamin</span>
+                </div>
+            </div>
+            
+            <!-- Inventory Value Chart -->
+            <div class="inventory-value">
+                <div class="value-header">
+                    <h3>Inventory Value</h3>
+                    <div class="value-period">
+                        <button class="period-btn active">Week</button>
+                        <button class="period-btn">Month</button>
+                        <button class="period-btn">Year</button>
+                    </div>
+                </div>
+                
+                <div class="chart-placeholder">
+                    [Inventory Value Chart Visualization]
+                </div>
+            </div>
+            
+            <!-- Inventory Summary -->
+            <div class="inventory-summary">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-icon icon-total">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3>Total Items</h3>
+                            <div class="value">1,842</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-icon icon-low">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3>Low Stock</h3>
+                            <div class="value">24</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-icon icon-value">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3>Total Value</h3>
+                            <div class="value">$48,759</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-icon icon-categories">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3>Categories</h3>
+                            <div class="value">18</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="inventory-header">
+                <div class="inventory-tools">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search inventory...">
+                    </div>
+                    
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">
+                            <i class="fas fa-filter"></i>
+                            Filters
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Add Inventory
+                </button>
+            </div>
+            
+            <div class="inventory-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Stock Level</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <img src="https://via.placeholder.com/50/6C4AB6/FFFFFF?text=MJ" class="product-img" alt="Men's Jacket">
+                                    <div class="product-info">
+                                        <h4>Men's Winter Jacket</h4>
+                                        <p>Size: M, Color: Black</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>MJ-WJ-001</td>
+                            <td>Outerwear</td>
+                            <td>
+                                <div class="stock-cell">
+                                    <div class="stock-level">
+                                        <div class="stock-progress progress-high"></div>
+                                    </div>
+                                    <span class="stock-value">24</span>
+                                </div>
+                            </td>
+                            <td>$89.99</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Restock"><i class="fas fa-boxes"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <img src="https://via.placeholder.com/50/8D72E1/FFFFFF?text=WD" class="product-img" alt="Women's Dress">
+                                    <div class="product-info">
+                                        <h4>Women's Summer Dress</h4>
+                                        <p>Size: S, Color: Blue</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>WD-SD-045</td>
+                            <td>Dresses</td>
+                            <td>
+                                <div class="stock-cell">
+                                    <div class="stock-level">
+                                        <div class="stock-progress progress-medium"></div>
+                                    </div>
+                                    <span class="stock-value">12</span>
+                                </div>
+                            </td>
+                            <td>$49.99</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Restock"><i class="fas fa-boxes"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <img src="https://via.placeholder.com/50/B9E0FF/000000?text=KS" class="product-img" alt="Kids Shirt">
+                                    <div class="product-info">
+                                        <h4>Kids Graphic T-Shirt</h4>
+                                        <p>Size: 6-8, Color: White</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>KS-GT-112</td>
+                            <td>T-Shirts</td>
+                            <td>
+                                <div class="stock-cell">
+                                    <div class="stock-level">
+                                        <div class="stock-progress progress-high"></div>
+                                    </div>
+                                    <span class="stock-value">42</span>
+                                </div>
+                            </td>
+                            <td>$19.99</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Restock"><i class="fas fa-boxes"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <img src="https://via.placeholder.com/50/6C4AB6/FFFFFF?text=MP" class="product-img" alt="Men's Pants">
+                                    <div class="product-info">
+                                        <h4>Men's Slim Fit Jeans</h4>
+                                        <p>Size: 32x32, Color: Dark Blue</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>MP-SF-205</td>
+                            <td>Pants</td>
+                            <td>
+                                <div class="stock-cell">
+                                    <div class="stock-level">
+                                        <div class="stock-progress progress-low"></div>
+                                    </div>
+                                    <span class="stock-value">5</span>
+                                </div>
+                            </td>
+                            <td>$59.99</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Restock"><i class="fas fa-boxes"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <img src="https://via.placeholder.com/50/8D72E1/FFFFFF?text=WB" class="product-img" alt="Women's Blouse">
+                                    <div class="product-info">
+                                        <h4>Women's Silk Blouse</h4>
+                                        <p>Size: M, Color: Pink</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>WB-SB-078</td>
+                            <td>Tops</td>
+                            <td>
+                                <div class="stock-cell">
+                                    <div class="stock-level">
+                                        <div class="stock-progress progress-low"></div>
+                                    </div>
+                                    <span class="stock-value">0</span>
+                                </div>
+                            </td>
+                            <td>$39.99</td>
+                            <td><span class="status-badge status-inactive">Out of Stock</span></td>
+                            <td>
+                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" title="Restock"><i class="fas fa-boxes"></i></button>
+                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="table-footer">
+                    <div class="results-count">
+                        Showing 1 to 5 of 1,842 items
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">4</button>
+                        <button class="page-btn">5</button>
+                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

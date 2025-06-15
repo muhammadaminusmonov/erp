@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+*.env
+*.venv
+.Python
+
+# PyCharm
+.idea/
+
+# SQLite database (if you don't want to upload it)
+*.sqlite3
+
+# Django migrations (optional — keep if you want migrations tracked)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Logs
+*.log
+
+# Docker
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.so
+
+# Test/coverage files
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# Node (if you ever add it)
+node_modules/
+
+# Static/media (optional — but you said no static files, so skip unless you generate them)
+# static/
+# media/
