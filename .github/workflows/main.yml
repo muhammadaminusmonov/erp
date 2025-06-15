@@ -1,19 +1,25 @@
-name: Deploy to EC2
+name: Deploy Django to Amazon Linux EC2
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Set up SSH
+    - name: Add EC2 to known hosts
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_HOST }} ecdsa-sha2-nistp256 AAAAB3NzaC1yc2EAAAADAQABAAABAQC..." >> ~/.ssh/known_hosts
+        # Tip: Generate this properly with: ssh-keyscan your-ec2-ip | base64 -w0
+
+    - name: Setup SSH
       uses: webfactory/ssh-agent@v0.8.1
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -22,10 +28,29 @@ jobs:
       uses: appleboy/ssh-action@v1
       with:
         host: ${{ secrets.SSH_HOST }}
-        user: ${{ secrets.SSH_USER }}
+        username: ${{ secrets.SSH_USER }}
         script: |
+          set -euxo pipefail  # Enable debugging and strict error handling
+          
+          # Navigate to project
           cd ${{ secrets.PROJECT_PATH }}
-          git fetch --all
-          git reset --hard origin/${{ secrets.BRANCH }}
-          docker-compose build --no-cache
-          docker-compose up -d
+          
+          # Clean git operations (Amazon Linux sometimes has old git)
+          sudo yum update -y git || true
+          git fetch origin
+          git checkout master --force
+          git reset --hard origin/master
+          
+          # Fix potential permissions (Amazon Linux specific)
+          sudo chown -R ec2-user:ec2-user .
+          find . -type d -exec chmod 755 {} \;
+          find . -type f -exec chmod 644 {} \;
+          
+          # Docker operations
+          sudo docker-compose down || true
+          sudo docker-compose build --no-cache
+          sudo docker-compose up -d
+          
+          # Django specific
+          sudo docker-compose exec -T web python manage.py migrate --noinput
+          sudo docker-compose exec -T web python manage.py collectstatic --noinput --clear
