@@ -19,5 +19,8 @@ COPY . .
 # Collect static files (if needed)
 RUN python src/manage.py collectstatic --noinput --clear
 
+# 4) Use /code/src as the working dir for gunicorn
+WORKDIR /code/src
+
 # Run Gunicorn (correct path based on your structure)
-CMD ["gunicorn", "src.erp.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "erp.wsgi:application", "--bind", "0.0.0.0:8000"]
