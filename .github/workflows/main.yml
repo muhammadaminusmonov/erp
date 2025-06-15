@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-24.04  # Explicitly using Ubuntu 24.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     steps:
@@ -18,19 +18,18 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}   # <-- PASS the key directly
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           set -euxo pipefail
-    
+
           cd ${{ secrets.PROJECT_PATH }}
           git fetch origin
           git reset --hard origin/master
           git clean -fd
-    
+
           sudo docker-compose down || true
           sudo docker-compose build --no-cache
           sudo docker-compose up -d
-    
+
           sudo docker-compose exec -T web python manage.py migrate --noinput
           sudo docker-compose exec -T web python manage.py collectstatic --noinput --clear
-
