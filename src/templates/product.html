@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,68 +16,68 @@
             --warning: #FFC107;
             --danger: #DC3545;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: var(--dark);
         }
-        
+
         .dashboard {
             display: grid;
             grid-template-columns: 250px 1fr;
             min-height: 100vh;
         }
-        
+
         /* Sidebar (same as dashboard) */
         .sidebar {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             color: white;
             padding: 2rem 1rem;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             margin-bottom: 2rem;
             padding-left: 1rem;
         }
-        
+
         .logo img {
             width: 40px;
             margin-right: 10px;
         }
-        
+
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 700;
         }
-        
+
         .nav-menu {
             list-style: none;
         }
-        
+
         .nav-item {
             margin-bottom: 0.5rem;
             border-radius: 8px;
             transition: all 0.3s ease;
         }
-        
+
         .nav-item:hover {
-            background-color: rgba(255,255,255,0.1);
+            background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .nav-item.active {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255, 255, 255, 0.2);
         }
-        
+
         .nav-link {
             display: flex;
             align-items: center;
@@ -85,34 +86,34 @@
             text-decoration: none;
             font-weight: 500;
         }
-        
+
         .nav-link i {
             margin-right: 10px;
             font-size: 1.1rem;
         }
-        
+
         /* Main Content */
         .main-content {
             padding: 2rem;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-        
+
         .page-title h2 {
             font-size: 1.8rem;
             color: var(--dark);
         }
-        
+
         .user-profile {
             display: flex;
             align-items: center;
         }
-        
+
         .user-profile img {
             width: 40px;
             height: 40px;
@@ -120,7 +121,7 @@
             margin-right: 10px;
             object-fit: cover;
         }
-        
+
         /* Products Page Specific Styles */
         .products-header {
             display: flex;
@@ -128,18 +129,18 @@
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .search-filter {
             display: flex;
             gap: 1rem;
             align-items: center;
         }
-        
+
         .search-bar {
             position: relative;
             width: 300px;
         }
-        
+
         .search-bar input {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 2.5rem;
@@ -148,13 +149,13 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
         }
-        
+
         .search-bar input:focus {
             outline: none;
             border-color: var(--secondary);
             box-shadow: 0 0 0 3px rgba(140, 114, 225, 0.2);
         }
-        
+
         .search-bar i {
             position: absolute;
             left: 1rem;
@@ -162,11 +163,11 @@
             transform: translateY(-50%);
             color: #6c757d;
         }
-        
+
         .filter-dropdown {
             position: relative;
         }
-        
+
         .filter-btn {
             padding: 0.75rem 1rem;
             background: white;
@@ -178,7 +179,7 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        
+
         .btn {
             padding: 0.5rem 1rem;
             border-radius: 8px;
@@ -187,34 +188,34 @@
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: #5a3d9d;
         }
-        
+
         /* Products Table */
         .products-table {
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         thead {
             background-color: #f8f9fa;
             border-bottom: 1px solid #f1f1f1;
         }
-        
+
         th {
             padding: 1rem;
             text-align: left;
@@ -224,62 +225,62 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         td {
             padding: 1rem;
             border-bottom: 1px solid #f1f1f1;
             font-size: 0.9rem;
         }
-        
+
         tr:last-child td {
             border-bottom: none;
         }
-        
+
         .product-cell {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        
+
         .product-img {
             width: 50px;
             height: 50px;
             border-radius: 8px;
             object-fit: cover;
         }
-        
+
         .product-info h4 {
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
         }
-        
+
         .product-info p {
             font-size: 0.8rem;
             color: #6c757d;
         }
-        
+
         .status-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
         }
-        
+
         .status-active {
             background-color: #e6f7ee;
             color: var(--success);
         }
-        
+
         .status-draft {
             background-color: #f1f1f1;
             color: #6c757d;
         }
-        
+
         .status-archived {
             background-color: #fce8e6;
             color: var(--danger);
         }
-        
+
         .action-btn {
             background: none;
             border: none;
@@ -289,11 +290,11 @@
             margin-right: 0.75rem;
             transition: color 0.3s ease;
         }
-        
+
         .action-btn:hover {
             color: var(--primary);
         }
-        
+
         .table-footer {
             display: flex;
             justify-content: space-between;
@@ -302,12 +303,12 @@
             background-color: #f8f9fa;
             border-top: 1px solid #f1f1f1;
         }
-        
+
         .pagination {
             display: flex;
             gap: 0.5rem;
         }
-        
+
         .page-btn {
             width: 32px;
             height: 32px;
@@ -320,17 +321,17 @@
             cursor: pointer;
             font-size: 0.8rem;
         }
-        
+
         .page-btn.active {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
         }
-        
+
         .page-btn:hover:not(.active) {
             background-color: #f1f1f1;
         }
-        
+
         .results-count {
             font-size: 0.85rem;
             color: #6c757d;
@@ -339,236 +340,156 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-<!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
-                <h1>StitchERP</h1>
+<div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
+            <h1>StitchERP</h1>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item ">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'product' %}" class="nav-link">
+                    <i class="fas fa-tshirt"></i>
+                    Products
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'order' %}" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Orders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'customer' %}" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    Customers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'inventory' %}" class="nav-link">
+                    <i class="fas fa-boxes"></i>
+                    Inventory
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="page-title">
+                <h2>Product Management</h2>
+                <p>Manage your clothing products, inventory, and variants</p>
             </div>
 
-            <ul class="nav-menu">
-                <li class="nav-item ">
-                    <a href="{% url 'dashboard' %}" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a href="{% url 'product' %}" class="nav-link">
-                        <i class="fas fa-tshirt"></i>
-                        Products
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'order' %}" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        Orders
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'customer' %}" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        Customers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'inventory' %}" class="nav-link">
-                        <i class="fas fa-boxes"></i>
-                        Inventory
-                    </a>
-                </li>
-            </ul>
+            <div class="user-profile">
+                <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
+                <span>Usmonov Muhammadamin</span>
+            </div>
         </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <div class="page-title">
-                    <h2>Product Management</h2>
-                    <p>Manage your clothing products, inventory, and variants</p>
+
+        <div class="products-header">
+
+
+            <a href="{% url 'product_add' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Add Product
+            </a>
+        </div>
+
+        <div class="products-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>
+                        <div class="product-cell">
+                            <div class="product-info">
+                                <h4>{{ product.title }}</h4>
+                                <p>SKU: {{ product.code }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ product.category.name }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>
+                                <span class="status-badge status-{{ product.get_status_display|lower|cut:' ' }}">
+                                    {{ product.get_status_display }}
+                                </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'product_edit' pk=product.id %}" class="action-btn" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'product_delete' pk=product.id %}" class="action-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">
+                        No products found. {% if search_query %}Try a different search.{% else %}<a href="">Add your
+                        first product</a>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="table-footer">
+                <div class="results-count">
+                    Showing 1 to 6 of 28 products
                 </div>
-                
-                <div class="user-profile">
-                   <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
-                    <span>Usmonov Muhammadamin</span>
-                </div>
-            </div>
-            
-            <div class="products-header">
-                <div class="search-filter">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search products...">
-                    </div>
-                    
-                    <div class="filter-dropdown">
-                        <button class="filter-btn">
-                            <i class="fas fa-filter"></i>
-                            Filters
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Add Product
-                </button>
-            </div>
-            
-            <div class="products-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="https://via.placeholder.com/50/6C4AB6/FFFFFF?text=MJ" class="product-img" alt="Men's Jacket">
-                                    <div class="product-info">
-                                        <h4>Men's Winter Jacket</h4>
-                                        <p>SKU: MJ-WJ-001</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Outerwear</td>
-                            <td>$89.99</td>
-                            <td>24</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="https://via.placeholder.com/50/8D72E1/FFFFFF?text=WD" class="product-img" alt="Women's Dress">
-                                    <div class="product-info">
-                                        <h4>Women's Summer Dress</h4>
-                                        <p>SKU: WD-SD-045</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Dresses</td>
-                            <td>$49.99</td>
-                            <td>15</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="https://via.placeholder.com/50/B9E0FF/000000?text=KS" class="product-img" alt="Kids Shirt">
-                                    <div class="product-info">
-                                        <h4>Kids Graphic T-Shirt</h4>
-                                        <p>SKU: KS-GT-112</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>T-Shirts</td>
-                            <td>$19.99</td>
-                            <td>42</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="https://via.placeholder.com/50/6C4AB6/FFFFFF?text=MP" class="product-img" alt="Men's Pants">
-                                    <div class="product-info">
-                                        <h4>Men's Slim Fit Jeans</h4>
-                                        <p>SKU: MP-SF-205</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Pants</td>
-                            <td>$59.99</td>
-                            <td>8</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="https://via.placeholder.com/50/8D72E1/FFFFFF?text=WB" class="product-img" alt="Women's Blouse">
-                                    <div class="product-info">
-                                        <h4>Women's Silk Blouse</h4>
-                                        <p>SKU: WB-SB-078</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Tops</td>
-                            <td>$39.99</td>
-                            <td>0</td>
-                            <td><span class="status-badge status-archived">Out of Stock</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="https://via.placeholder.com/50/B9E0FF/000000?text=UA" class="product-img" alt="Unisex Accessory">
-                                    <div class="product-info">
-                                        <h4>Unisex Wool Beanie</h4>
-                                        <p>SKU: UA-WB-033</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Accessories</td>
-                            <td>$24.99</td>
-                            <td>36</td>
-                            <td><span class="status-badge status-draft">Draft</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-copy"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="table-footer">
-                    <div class="results-count">
-                        Showing 1 to 6 of 28 products
-                    </div>
-                    
-                    <div class="pagination">
-                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <button class="page-btn">4</button>
-                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                    </div>
+
+                <div class="pagination">
+                    <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<script>
+    // Toggle filter dropdown
+    document.getElementById('filter-toggle').addEventListener('click', function () {
+        const filterContent = document.getElementById('filter-content');
+        filterContent.style.display = filterContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close filter dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+        const filterToggle = document.getElementById('filter-toggle');
+        const filterContent = document.getElementById('filter-content');
+        if (!filterToggle.contains(event.target) && !filterContent.contains(event.target)) {
+            filterContent.style.display = 'none';
+        }
+    });
+</script>
+
 </body>
 </html>

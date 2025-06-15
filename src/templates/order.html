@@ -40,7 +40,7 @@
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             color: white;
             padding: 2rem 1rem;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .logo {
@@ -71,11 +71,11 @@
         }
 
         .nav-item:hover {
-            background-color: rgba(255,255,255,0.1);
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .nav-item.active {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .nav-link {
@@ -225,7 +225,7 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         table {
@@ -304,7 +304,7 @@
             object-fit: cover;
             border: 2px solid white;
             margin-right: -8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .product-thumb.more {
@@ -408,7 +408,7 @@
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             margin-top: 1.5rem;
         }
 
@@ -449,279 +449,176 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-<!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
-                <h1>StitchERP</h1>
-            </div>
-
-            <ul class="nav-menu">
-                <li class="nav-item ">
-                    <a href="{% url 'dashboard' %}" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'product' %}" class="nav-link">
-                        <i class="fas fa-tshirt"></i>
-                        Products
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a href="{% url 'order' %}" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        Orders
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'customer' %}" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        Customers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'inventory' %}" class="nav-link">
-                        <i class="fas fa-boxes"></i>
-                        Inventory
-                    </a>
-                </li>
-            </ul>
+<div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h1>StitchERP</h1>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <div class="page-title">
-                    <h2>Order Management</h2>
-                    <p>View and manage customer orders and fulfillment</p>
+        <ul class="nav-menu">
+            <li class="nav-item ">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'product' %}" class="nav-link">
+                    <i class="fas fa-tshirt"></i>
+                    Products
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a href="{% url 'order' %}" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Orders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'customer' %}" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    Customers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'inventory' %}" class="nav-link">
+                    <i class="fas fa-boxes"></i>
+                    Inventory
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="page-title">
+                <h2>Order Management</h2>
+                <p>View and manage customer orders and fulfillment</p>
+            </div>
+
+            <div class="user-profile">
+                <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
+                <span>Usmonov Muhammadamin</span>
+            </div>
+        </div>
+
+        <!-- Order Summary Card -->
+        <div class="order-summary-card">
+            <div class="summary-header">
+                <h3>Today's Summary</h3>
+            </div>
+
+            <div class="summary-stats">
+                <div class="summary-stat">
+                    <div class="value">24</div>
+                    <div class="label">New Orders</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="value">$3,842</div>
+                    <div class="label">Total Revenue</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="value">18</div>
+                    <div class="label">To Ship</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="value">4</div>
+                    <div class="label">Returns</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="orders-header">
+            <div class="order-filters">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search orders...">
                 </div>
 
-                <div class="user-profile">
-                    <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
-                    <span>Usmonov Muhammadamin</span>
+                <div class="filter-tabs">
+                    <div class="filter-tab active">All</div>
+                    <div class="filter-tab">Pending</div>
+                    <div class="filter-tab">Processing</div>
+                    <div class="filter-tab">Completed</div>
+                    <div class="filter-tab">Cancelled</div>
                 </div>
             </div>
 
-            <!-- Order Summary Card -->
-            <div class="order-summary-card">
-                <div class="summary-header">
-                    <h3>Today's Summary</h3>
-                    <div class="date-picker">
-                        <i class="far fa-calendar-alt"></i>
-                        <span>Today, June 14, 2023</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Create Order
+            </button>
+        </div>
+
+        <div class="orders-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for order in page_obj %}
+                <tr>
+                    <td class="order-id">#{{ order.id }}</td>
+                    <td>
+                        <div class="customer-cell">
+                            <div class="customer-info">
+                                <h4>{{ order.customer.name }}</h4>
+                                <p>{{ order.customer.email }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ order.created_at|date:"M d, Y" }}</td>
+                    <td>${{ order.total_amount }}</td>
+                    <td>
+                        <span class="status-badge {{ order.get_status_class }}">
+                            {% if order.status == 'processing' %}
+                            <i class="fas fa-shipping-fast"></i>
+                            {% endif %}
+                            {{ order.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'order_detail' pk=order.id %}" class="action-btn" title="View">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="#" class="action-btn" title="Print"><i class="fas fa-print"></i></a>
+                        <a href="{% url 'order_update' pk=order.id %}" class="action-btn" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+            <div class="table-footer">
+                <div class="results-count">
+                    Showing 1 to 5 of 24 orders
                 </div>
 
-                <div class="summary-stats">
-                    <div class="summary-stat">
-                        <div class="value">24</div>
-                        <div class="label">New Orders</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">$3,842</div>
-                        <div class="label">Total Revenue</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">18</div>
-                        <div class="label">To Ship</div>
-                    </div>
-                    <div class="summary-stat">
-                        <div class="value">4</div>
-                        <div class="label">Returns</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="orders-header">
-                <div class="order-filters">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search orders...">
-                    </div>
-
-                    <div class="filter-tabs">
-                        <div class="filter-tab active">All</div>
-                        <div class="filter-tab">Pending</div>
-                        <div class="filter-tab">Processing</div>
-                        <div class="filter-tab">Completed</div>
-                        <div class="filter-tab">Cancelled</div>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Create Order
-                </button>
-            </div>
-
-            <div class="orders-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Products</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="order-id">#ORD-7842</td>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">JD</div>
-                                    <div class="customer-info">
-                                        <h4>John Doe</h4>
-                                        <p>john@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="products-preview">
-                                    <img src="https://via.placeholder.com/32/6C4AB6/FFFFFF?text=MJ" class="product-thumb" alt="Product">
-                                    <img src="https://via.placeholder.com/32/8D72E1/FFFFFF?text=WT" class="product-thumb" alt="Product">
-                                    <div class="product-thumb more">+2</div>
-                                </div>
-                            </td>
-                            <td>Jun 14, 2023</td>
-                            <td>$189.97</td>
-                            <td><span class="status-badge status-processing"><i class="fas fa-shipping-fast"></i> Processing</span></td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Print"><i class="fas fa-print"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="order-id">#ORD-7841</td>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">AS</div>
-                                    <div class="customer-info">
-                                        <h4>Alice Smith</h4>
-                                        <p>alice@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="products-preview">
-                                    <img src="https://via.placeholder.com/32/B9E0FF/000000?text=WD" class="product-thumb" alt="Product">
-                                </div>
-                            </td>
-                            <td>Jun 14, 2023</td>
-                            <td>$49.99</td>
-                            <td><span class="status-badge status-pending"><i class="fas fa-clock"></i> Pending</span></td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Print"><i class="fas fa-print"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="order-id">#ORD-7840</td>
-                            <td>
-                                <div class="customer-cell">
-                                    <img src="https://via.placeholder.com/36" class="customer-avatar" alt="Customer">
-                                    <div class="customer-info">
-                                        <h4>Robert Johnson</h4>
-                                        <p>robert@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="products-preview">
-                                    <img src="https://via.placeholder.com/32/6C4AB6/FFFFFF?text=MP" class="product-thumb" alt="Product">
-                                    <img src="https://via.placeholder.com/32/8D72E1/FFFFFF?text=MS" class="product-thumb" alt="Product">
-                                </div>
-                            </td>
-                            <td>Jun 13, 2023</td>
-                            <td>$129.98</td>
-                            <td><span class="status-badge status-completed"><i class="fas fa-check-circle"></i> Completed</span></td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Print"><i class="fas fa-print"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="order-id">#ORD-7839</td>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">MB</div>
-                                    <div class="customer-info">
-                                        <h4>Maria Brown</h4>
-                                        <p>maria@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="products-preview">
-                                    <img src="https://via.placeholder.com/32/B9E0FF/000000?text=KS" class="product-thumb" alt="Product">
-                                    <img src="https://via.placeholder.com/32/6C4AB6/FFFFFF?text=KD" class="product-thumb" alt="Product">
-                                    <img src="https://via.placeholder.com/32/8D72E1/FFFFFF?text=KA" class="product-thumb" alt="Product">
-                                </div>
-                            </td>
-                            <td>Jun 13, 2023</td>
-                            <td>$94.97</td>
-                            <td><span class="status-badge status-completed"><i class="fas fa-check-circle"></i> Completed</span></td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Print"><i class="fas fa-print"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="order-id">#ORD-7838</td>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">DW</div>
-                                    <div class="customer-info">
-                                        <h4>David Wilson</h4>
-                                        <p>david@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="products-preview">
-                                    <img src="https://via.placeholder.com/32/6C4AB6/FFFFFF?text=MJ" class="product-thumb" alt="Product">
-                                </div>
-                            </td>
-                            <td>Jun 12, 2023</td>
-                            <td>$89.99</td>
-                            <td><span class="status-badge status-cancelled"><i class="fas fa-times-circle"></i> Cancelled</span></td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Print"><i class="fas fa-print"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="table-footer">
-                    <div class="results-count">
-                        Showing 1 to 5 of 24 orders
-                    </div>
-
-                    <div class="pagination">
-                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <button class="page-btn">4</button>
-                        <button class="page-btn">5</button>
-                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                    </div>
+                <div class="pagination">
+                    <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn">5</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

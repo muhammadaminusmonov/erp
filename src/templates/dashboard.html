@@ -15,68 +15,68 @@
             --warning: #FFC107;
             --danger: #DC3545;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: var(--dark);
         }
-        
+
         .dashboard {
             display: grid;
             grid-template-columns: 250px 1fr;
             min-height: 100vh;
         }
-        
+
         /* Sidebar */
         .sidebar {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             color: white;
             padding: 2rem 1rem;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             margin-bottom: 2rem;
             padding-left: 1rem;
         }
-        
+
         .logo img {
             width: 40px;
             margin-right: 10px;
         }
-        
+
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 700;
         }
-        
+
         .nav-menu {
             list-style: none;
         }
-        
+
         .nav-item {
             margin-bottom: 0.5rem;
             border-radius: 8px;
             transition: all 0.3s ease;
         }
-        
+
         .nav-item:hover {
-            background-color: rgba(255,255,255,0.1);
+            background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .nav-item.active {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255, 255, 255, 0.2);
         }
-        
+
         .nav-link {
             display: flex;
             align-items: center;
@@ -85,34 +85,34 @@
             text-decoration: none;
             font-weight: 500;
         }
-        
+
         .nav-link i {
             margin-right: 10px;
             font-size: 1.1rem;
         }
-        
+
         /* Main Content */
         .main-content {
             padding: 2rem;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-        
+
         .page-title h2 {
             font-size: 1.8rem;
             color: var(--dark);
         }
-        
+
         .user-profile {
             display: flex;
             align-items: center;
         }
-        
+
         .user-profile img {
             width: 40px;
             height: 40px;
@@ -120,7 +120,7 @@
             margin-right: 10px;
             object-fit: cover;
         }
-        
+
         /* Stats Cards */
         .stats-grid {
             display: grid;
@@ -128,76 +128,76 @@
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-        
+
         .stat-card {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
         }
-        
+
         .stat-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .stat-card h3 {
             font-size: 0.9rem;
             color: #6c757d;
             margin-bottom: 0.5rem;
         }
-        
+
         .stat-card .value {
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-        
+
         .stat-card .trend {
             display: flex;
             align-items: center;
             font-size: 0.85rem;
         }
-        
+
         .trend.up {
             color: var(--success);
         }
-        
+
         .trend.down {
             color: var(--danger);
         }
-        
+
         /* Main Grid */
         .main-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 1.5rem;
         }
-        
+
         .chart-card, .recent-orders, .inventory-alerts {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        
+
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .card-header h3 {
             font-size: 1.2rem;
             font-weight: 600;
         }
-        
+
         .card-header .actions {
             display: flex;
             gap: 0.5rem;
         }
-        
+
         .btn {
             padding: 0.5rem 1rem;
             border-radius: 8px;
@@ -206,18 +206,18 @@
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
         }
-        
+
         .btn-outline {
             background: transparent;
             border: 1px solid #dee2e6;
             color: var(--dark);
         }
-        
+
         /* Chart Placeholder */
         .chart-placeholder {
             height: 300px;
@@ -228,7 +228,7 @@
             justify-content: center;
             color: #adb5bd;
         }
-        
+
         /* Recent Orders */
         .order-item {
             display: flex;
@@ -236,11 +236,11 @@
             padding: 1rem 0;
             border-bottom: 1px solid #f1f1f1;
         }
-        
+
         .order-item:last-child {
             border-bottom: none;
         }
-        
+
         .order-item img {
             width: 50px;
             height: 50px;
@@ -248,65 +248,65 @@
             border-radius: 8px;
             margin-right: 1rem;
         }
-        
+
         .order-info {
             flex: 1;
         }
-        
+
         .order-info h4 {
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
         }
-        
+
         .order-info p {
             font-size: 0.8rem;
             color: #6c757d;
         }
-        
+
         .order-status {
             padding: 0.25rem 0.5rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
         }
-        
+
         .status-completed {
             background-color: #e6f7ee;
             color: var(--success);
         }
-        
+
         .status-pending {
             background-color: #fff8e6;
             color: var(--warning);
         }
-        
+
         .status-cancelled {
             background-color: #fce8e6;
             color: var(--danger);
         }
-        
+
         /* Inventory Alerts */
         .alert-item {
             padding: 0.75rem 0;
             border-bottom: 1px solid #f1f1f1;
         }
-        
+
         .alert-item:last-child {
             border-bottom: none;
         }
-        
+
         .alert-item h4 {
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
             display: flex;
             justify-content: space-between;
         }
-        
+
         .alert-item p {
             font-size: 0.8rem;
             color: #6c757d;
         }
-        
+
         .stock-level {
             height: 6px;
             background-color: #f1f1f1;
@@ -314,22 +314,22 @@
             margin-top: 0.5rem;
             overflow: hidden;
         }
-        
+
         .stock-progress {
             height: 100%;
             border-radius: 3px;
         }
-        
+
         .progress-low {
             background-color: var(--danger);
             width: 15%;
         }
-        
+
         .progress-medium {
             background-color: var(--warning);
             width: 45%;
         }
-        
+
         .progress-high {
             background-color: var(--success);
             width: 80%;
@@ -351,253 +351,242 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-<!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
-                <h1>StitchERP</h1>
-            </div>
-            
-            <ul class="nav-menu">
-                <li class="nav-item active">
-                    <a href="{% url 'dashboard' %}" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'product' %}" class="nav-link">
-                        <i class="fas fa-tshirt"></i>
-                        Products
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'order' %}" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        Orders
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'customer' %}" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        Customers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'inventory' %}" class="nav-link">
-                        <i class="fas fa-boxes"></i>
-                        Inventory
-                    </a>
-                </li>
-            </ul>
+<div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
+            <h1>StitchERP</h1>
         </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <div class="page-title">
-                    <h2>Dashboard Overview</h2>
-                    <p>Welcome back, Sarah! Here's what's happening with your store today.</p>
-                </div>
-                
-                <div class="user-profile">
-<!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
-                    <span>Usmonov Muhammadamin</span>
+
+        <ul class="nav-menu">
+            <li class="nav-item active">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'product' %}" class="nav-link">
+                    <i class="fas fa-tshirt"></i>
+                    Products
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'order' %}" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Orders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'customer' %}" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    Customers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'inventory' %}" class="nav-link">
+                    <i class="fas fa-boxes"></i>
+                    Inventory
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="page-title">
+                <h2>Dashboard Overview</h2>
+                <p>Welcome back, Sarah! Here's what's happening with your store today.</p>
+            </div>
+
+            <div class="user-profile">
+                <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
+                <span>Usmonov Muhammadamin</span>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            {% for stat in stats %}
+            <div class="stat-card">
+                <h3>{{ stat.title }}</h3>
+                <div class="value">{{ stat.value }}</div>
+                <div class="trend {{ stat.trend }}">
+                    <i class="fas fa-arrow-{{ stat.trend }}"></i> {{ stat.change }}
                 </div>
             </div>
-            
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Today's Revenue</h3>
-                    <div class="value">$3,842</div>
-                    <div class="trend up">
-                        <i class="fas fa-arrow-up"></i> 12% from yesterday
+            {% endfor %}
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <div class="chart-card">
+                <div class="card-header">
+                    <h3>Sales Performance</h3>
+                    <div class="actions">
+                        <button class="btn btn-outline" onclick="updateChart('week')">Week</button>
+                        <button class="btn btn-outline" onclick="updateChart('month')">Month</button>
+                        <button class="btn btn-primary" onclick="updateChart('year')">Year</button>
                     </div>
                 </div>
-                
-                <div class="stat-card">
-                    <h3>New Orders</h3>
-                    <div class="value">24</div>
-                    <div class="trend up">
-                        <i class="fas fa-arrow-up"></i> 8% from yesterday
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>Inventory Alerts</h3>
-                    <div class="value">7</div>
-                    <div class="trend down">
-                        <i class="fas fa-arrow-down"></i> Need restocking
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>Customer Satisfaction</h3>
-                    <div class="value">94%</div>
-                    <div class="trend up">
-                        <i class="fas fa-arrow-up"></i> 2% from last week
-                    </div>
+
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
                 </div>
             </div>
-            
-            <!-- Main Grid -->
-            <div class="main-grid">
-                <div class="chart-card">
-                    <div class="card-header">
-                        <h3>Sales Performance</h3>
-                        <div class="actions">
-                            <button class="btn btn-outline" onclick="updateChart('week')">Week</button>
-                            <button class="btn btn-outline" onclick="updateChart('month')">Month</button>
-                            <button class="btn btn-primary" onclick="updateChart('year')">Year</button>
-                        </div>
-                    </div>
 
-                    <div class="chart-container">
-                        <canvas id="salesChart"></canvas>
+            <div class="inventory-alerts">
+                <div class="card-header">
+                    <h3>Inventory Alerts ({{ inventory_alerts|length }})</h3>
+                    <a href="{% url 'inventory' %}" class="btn btn-outline">View All</a>
+                </div>
+
+                {% for item in inventory_alerts %}
+                <div class="alert-item">
+                    <h4>{{ item.product.title }} <span class="order-status status-{{ item.status_class }}">{{ item.status }}</span>
+                    </h4>
+                    <p>{{ item.stock }} items left</p>
+                    <div class="stock-level">
+                        <div class="stock-progress progress-{% if item.stock < 5 %}low{% elif item.stock < 15 %}medium{% else %}high{% endif %}"></div>
                     </div>
                 </div>
-                
-                <div class="inventory-alerts">
-                    <div class="card-header">
-                        <h3>Inventory Alerts</h3>
-                        <a href="{% url 'inventory' %}" class="btn btn-outline">View All</a>
-                    </div>
+                {% empty %}
+                <p style="padding: 1rem 0; color: #6c757d;">No inventory alerts</p>
+                {% endfor %}
+            </div>
 
-                    <div class="alert-item">
-                        <h4>Kids Sneakers</h4>
-                        <p>32 items left</p>
-                        <div class="stock-level">
-                            <div class="stock-progress progress-high"></div>
-                        </div>
-                    </div>
-
+            <div class="recent-orders">
+                <div class="card-header">
+                    <h3>Recent Orders</h3>
+                    <a href="{% url 'order' %}" class="btn btn-outline">View All</a>
                 </div>
-                
-                <div class="recent-orders">
-                    <div class="card-header">
-                        <h3>Recent Orders</h3>
-                        <a href="{% url 'order' %}" class="btn btn-outline">View All</a>
-                    </div>
-                    
-                    <div class="order-item">
-<!--                        <img src="https://via.placeholder.com/50" alt="Product">-->
-                        <div class="order-info">
-                            <h4>Men's Casual Shirt</h4>
-                            <p>Order #45678 • 2 items • $59.98</p>
-                        </div>
-                        <span class="order-status status-completed">Completed</span>
-                    </div>
 
+                {% for order in recent_orders %}
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>
+                            {% for product in order.products %}
+                            {{ product.product.title }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </h4>
+                        <p>Order {{ order.id }} • {{ order.products|length }} items • ${{ order.total }}</p>
+                    </div>
+                    <span class="order-status status-{{ order.status_class }}">{{ order.status }}</span>
                 </div>
+                {% empty %}
+                <p style="padding: 1rem 0; color: #6c757d;">No recent orders</p>
+                {% endfor %}
             </div>
         </div>
     </div>
+</div>
 
 <script>
-        // Initialize the chart
-        const ctx = document.getElementById('salesChart').getContext('2d');
-        let salesChart;
+    // Initialize the chart with data from Django
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    let salesChart;
 
-        // Data for different time periods
-        const chartData = {
-            week: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                data: [1200, 1900, 1500, 2000, 2200, 2500, 1800]
+    // Data from Django context
+    const chartData = {
+        week: {
+            labels: {{ sales_chart.weekly.labels|safe }},
+            data: {{ sales_chart.weekly.data|safe }}
+        },
+        month: {
+            labels: {{ sales_chart.monthly.labels|safe }},
+            data: {{ sales_chart.monthly.data|safe }}
+        },
+        year: {
+            labels: {{ sales_chart.yearly.labels|safe }},
+            data: {{ sales_chart.yearly.data|safe }}
+        }
+    };
+
+    // Create the initial chart
+    function createChart(period = 'year') {
+        const data = chartData[period];
+
+        salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Sales ($)',
+                    data: data.data,
+                    backgroundColor: 'rgba(108, 74, 182, 0.1)',
+                    borderColor: '#6C4AB6',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#6C4AB6',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
             },
-            month: {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                data: [7500, 8200, 9100, 8800]
-            },
-            year: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                data: [28000, 32000, 35000, 38000, 42000, 45000, 48000, 47000, 44000, 50000, 52000, 55000]
-            }
-        };
-
-        // Create the initial chart
-        function createChart(period = 'year') {
-            const data = chartData[period];
-
-            salesChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Sales ($)',
-                        data: data.data,
-                        backgroundColor: 'rgba(108, 74, 182, 0.1)',
-                        borderColor: '#6C4AB6',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#6C4AB6',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: '#6C4AB6',
-                            padding: 12,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return '$' + context.parsed.y.toLocaleString();
-                                }
-                            }
-                        }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
+                    tooltip: {
+                        backgroundColor: '#6C4AB6',
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.parsed.y.toLocaleString();
                             }
                         }
                     }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
                 }
-            });
-        }
-
-        // Update chart when time period changes
-        function updateChart(period) {
-            const data = chartData[period];
-            salesChart.data.labels = data.labels;
-            salesChart.data.datasets[0].data = data.data;
-            salesChart.update();
-
-            // Update button states
-            document.querySelectorAll('.actions button').forEach(btn => {
-                btn.classList.remove('btn-primary');
-                btn.classList.add('btn-outline');
-            });
-            event.target.classList.remove('btn-outline');
-            event.target.classList.add('btn-primary');
-        }
-
-        // Initialize the chart when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            createChart();
+            }
         });
-    </script>
+    }
+
+    // Update chart when time period changes
+    function updateChart(period) {
+        const data = chartData[period];
+        salesChart.data.labels = data.labels;
+        salesChart.data.datasets[0].data = data.data;
+        salesChart.update();
+
+        // Update button states
+        document.querySelectorAll('.actions button').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline');
+        });
+        event.target.classList.remove('btn-outline');
+        event.target.classList.add('btn-primary');
+    }
+
+    // Initialize the chart when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        createChart();
+    });
+</script>
 
 </body>
 </html>
+
