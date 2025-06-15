@@ -1,31 +1,36 @@
-name: Deploy to EC2
+name: Deploy Django to Amazon Linux EC2
 
 on:
   push:
-    branches:
-      - ${{ secrets.BRANCH }}
+    branches: [ master ]
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-24.04  # Explicitly using Ubuntu 24.04
+    timeout-minutes: 15
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.8.1
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      uses: actions/checkout@v4
 
     - name: Deploy via SSH
-      uses: appleboy/ssh-action@v1
+      uses: appleboy/ssh-action@v1.1.0
       with:
         host: ${{ secrets.SSH_HOST }}
-        user: ${{ secrets.SSH_USER }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}   # <-- PASS the key directly
         script: |
+          set -euxo pipefail
+    
           cd ${{ secrets.PROJECT_PATH }}
-          git fetch --all
-          git reset --hard origin/${{ secrets.BRANCH }}
-          docker-compose build --no-cache
-          docker-compose up -d
+          git fetch origin
+          git reset --hard origin/master
+          git clean -fd
+    
+          sudo docker-compose down || true
+          sudo docker-compose build --no-cache
+          sudo docker-compose up -d
+    
+          sudo docker-compose exec -T web python manage.py migrate --noinput
+          sudo docker-compose exec -T web python manage.py collectstatic --noinput --clear
+
