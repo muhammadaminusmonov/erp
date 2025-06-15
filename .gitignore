@@ -16,8 +16,8 @@ env/
 # PyCharm
 .idea/
 
-# SQLite database (if you don't want to upload it)
-*.sqlite3
+## SQLite database (if you don't want to upload it)
+#*.sqlite3
 
 # Django migrations (optional — keep if you want migrations tracked)
 **/migrations/*.pyc
