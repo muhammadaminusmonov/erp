@@ -63,7 +63,7 @@ def add_inventory(request):
             messages.success(request, 'Inventory item added successfully!')
             return redirect('inventory')
         else:
-            messages.error(request, 'Error adding inventory item. Please check the form.')
+            messages.error(request, form)
     else:
         form = InventoryForm()
 
