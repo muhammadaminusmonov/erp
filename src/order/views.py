@@ -282,7 +282,7 @@ class OrderDetailView(DetailView):
 class OrderUpdateView(UpdateView):
     model = Order
     template_name = 'order_form.html'
-    fields = ['customer', 'items', 'total_amount', 'status']
+    fields = ['customer', 'total_amount', 'status']
     success_url = reverse_lazy('order_list')
 
 
