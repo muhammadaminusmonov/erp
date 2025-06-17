@@ -17,9 +17,23 @@
 #     path('<int:pk>/status/<str:status>/', update_order_status, name='update_order_status'),
 # ]
 
+# order/urls.py
 from django.urls import path
-from .views import order
+from .views import OrderPrintView
+
+from . import views
+from .views import OrderListView, OrderDetailView, OrderCreateView, OrderUpdateView, OrderDeleteView
 
 urlpatterns = [
-    path('', order, name='order'),
+    path('', OrderListView.as_view(), name='order_list'),
+    path('<int:pk>/', OrderDetailView.as_view(), name='order_detail'),
+    path('<int:pk>/update/', OrderUpdateView.as_view(), name='order_update'),
+    path('<int:pk>/delete/', OrderDeleteView.as_view(), name='order_delete'),
+    path('orders/<int:pk>/update-status/<str:status>/', views.update_order_status, name='update_order_status'),
+    path('create/', OrderCreateView.as_view(), name='order_create'),
+    path('order/<int:pk>/', OrderDetailView.as_view(), name='order_detail'),
+    path('order/<int:pk>/update/', OrderUpdateView.as_view(), name='order_update'),
+    path('order/<int:pk>/delete/', OrderDeleteView.as_view(), name='order_delete'),
+    path('order/<int:pk>/print/', OrderPrintView.as_view(), name='order_print'),
+
 ]

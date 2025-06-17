@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory | StitchERP</title>
+    <title>Add Inventory | StitchERP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-
+        .inventory-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
         :root {
             --primary: #6C4AB6;
             --secondary: #8D72E1;
@@ -124,15 +131,15 @@
             object-fit: cover;
         }
 
-        /* Inventory Page Specific Styles */
-        .inventory-header {
+        /* Customers Page Specific Styles */
+        .customers-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
 
-        .inventory-tools {
+        .customer-tools {
             display: flex;
             gap: 1rem;
             align-items: center;
@@ -200,15 +207,15 @@
             background-color: #5a3d9d;
         }
 
-        /* Inventory Summary */
-        .inventory-summary {
+        /* Customer Segments */
+        .customer-segments {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
-        .summary-card {
+        .segment-card {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
@@ -216,17 +223,17 @@
             transition: transform 0.3s ease;
         }
 
-        .summary-card:hover {
+        .segment-card:hover {
             transform: translateY(-3px);
         }
 
-        .summary-header {
+        .segment-header {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
         }
 
-        .summary-icon {
+        .segment-icon {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -236,39 +243,39 @@
             margin-right: 1rem;
         }
 
-        .icon-total {
+        .icon-new {
             background-color: rgba(108, 74, 182, 0.1);
             color: var(--primary);
         }
 
-        .icon-low {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: var(--danger);
-        }
-
-        .icon-value {
+        .icon-regular {
             background-color: rgba(76, 175, 80, 0.1);
             color: var(--success);
         }
 
-        .icon-categories {
-            background-color: rgba(23, 162, 184, 0.1);
-            color: var(--info);
+        .icon-vip {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
         }
 
-        .summary-info h3 {
+        .icon-inactive {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+
+        .segment-info h3 {
             font-size: 0.95rem;
             color: #6c757d;
             margin-bottom: 0.25rem;
         }
 
-        .summary-info .value {
+        .segment-info .value {
             font-size: 1.5rem;
             font-weight: 700;
         }
 
-        /* Inventory Table */
-        .inventory-table {
+        /* Customers Table */
+        .customers-table {
             background: white;
             border-radius: 12px;
             overflow: hidden;
@@ -305,84 +312,75 @@
             border-bottom: none;
         }
 
-        .product-cell {
+        .customer-cell {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .product-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             object-fit: cover;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        .product-info h4 {
+        .customer-info h4 {
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
         }
 
-        .product-info p {
+        .customer-info p {
             font-size: 0.8rem;
             color: #6c757d;
         }
 
-        .stock-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .stock-level {
-            height: 6px;
-            flex-grow: 1;
-            background-color: #f1f1f1;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .stock-progress {
-            height: 100%;
-            border-radius: 3px;
-        }
-
-        .progress-high {
-            background-color: var(--success);
-            width: 80%;
-        }
-
-        .progress-medium {
-            background-color: var(--warning);
-            width: 45%;
-        }
-
-        .progress-low {
-            background-color: var(--danger);
-            width: 15%;
-        }
-
-        .stock-value {
-            min-width: 30px;
-            text-align: right;
-            font-weight: 500;
-        }
-
-        .status-badge {
-            padding: 0.35rem 0.75rem;
+        .segment-badge {
+            padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
         }
 
-        .status-active {
-            background-color: #e6f7ee;
+        .segment-new {
+            background-color: rgba(108, 74, 182, 0.1);
+            color: var(--primary);
+        }
+
+        .segment-regular {
+            background-color: rgba(76, 175, 80, 0.1);
             color: var(--success);
         }
 
-        .status-inactive {
-            background-color: #fce8e6;
+        .segment-vip {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+
+        .segment-inactive {
+            background-color: rgba(220, 53, 69, 0.1);
             color: var(--danger);
+        }
+
+        .stats-cell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6c757d;
         }
 
         .action-btn {
@@ -441,8 +439,8 @@
             color: #6c757d;
         }
 
-        /* Inventory Value Chart */
-        .inventory-value {
+        /* Customer Activity Chart */
+        .customer-activity {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
@@ -450,19 +448,19 @@
             margin-bottom: 1.5rem;
         }
 
-        .value-header {
+        .activity-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
 
-        .value-header h3 {
+        .activity-header h3 {
             font-size: 1.2rem;
             font-weight: 600;
         }
 
-        .value-period {
+        .activity-period {
             display: flex;
             gap: 0.5rem;
         }
@@ -491,7 +489,55 @@
             justify-content: center;
             color: #adb5bd;
         }
+.form-group {
+    margin-bottom: 15px;
+}
 
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #6C4AB6;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background: #28a745;
+    color: #fff;
+}
+
+.alert-error {
+    background: #dc3545;
+    color: #fff;
+}
     </style>
 </head>
 <body>
@@ -534,176 +580,67 @@
         <div class="main-content">
             <div class="header">
                 <div class="page-title">
-                    <h2>Inventory Management</h2>
-                    <p>Track and manage your clothing inventory across all locations</p>
+                    <h2>Add New Inventory Item</h2>
+                    <p>Fill in the details to add a new item to your inventory</p>
                 </div>
                 <div class="user-profile">
                     <span>{{ user.get_full_name|default:user.username }}</span>
                 </div>
             </div>
 
-            <!-- Inventory Value Chart -->
-            <div class="inventory-value">
-                <div class="value-header">
-                    <h3>Inventory Value</h3>
-                    <div class="value-period">
-                        <button class="period-btn active">Week</button>
-                        <button class="period-btn">Month</button>
-                        <button class="period-btn">Year</button>
-                    </div>
-                </div>
-                <div class="chart-placeholder">
-                    <!-- Chart.js yoki boshqa kutubxona yordamida dinamik chart qo'shishingiz mumkin -->
-                    [Inventory Value Chart Visualization]
-                </div>
-            </div>
-
-            <!-- Inventory Summary -->
-            <div class="inventory-summary">
-                <div class="summary-card">
-                    <div class="summary-header">
-                        <div class="summary-icon icon-total">
-                            <i class="fas fa-box-open"></i>
-                        </div>
-                        <div class="summary-info">
-                            <h3>Total Items</h3>
-                            <div class="value">{{ total_items }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-header">
-                        <div class="summary-icon icon-low">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="summary-info">
-                            <h3>Low Stock</h3>
-                            <div class="value">{{ low_stock }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-header">
-                        <div class="summary-icon icon-value">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <div class="summary-info">
-                            <h3>Total Value</h3>
-                            <div class="value">${{ total_value }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-header">
-                        <div class="summary-icon icon-categories">
-                            <i class="fas fa-tags"></i>
-                        </div>
-                        <div class="summary-info">
-                            <h3>Categories</h3>
-                            <div class="value">{{ total_categories }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Inventory Header -->
-            <div class="inventory-header">
-                <div class="inventory-tools">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search inventory..." name="q">
-                    </div>
-                    <div class="filter-dropdown">
-                        <button class="filter-btn">
-                            <i class="fas fa-filter"></i> Filters
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                </div>
-                <a href="{% url 'add_inventory' %}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Add Inventory
-                </a>
-            </div>
-
-            <!-- Inventory Table -->
-            <div class="inventory-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>SKU</th>
-                            <th>Category</th>
-                            <th>Stock Level</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in inventory_items %}
-                        <tr>
-                            <td>
-                                <div class="product-cell">
-                                    <img src="{{ item.product.image.url|default:'https://via.placeholder.com/50' }}" class="product-img" alt="{{ item.title }}">
-                                    <div class="product-info">
-                                        <h4>{{ item.title }}</h4>
-                                        <p>Size: {{ item.size }}, Color: {{ item.color }}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>{{ item.code }}</td>
-                            <td>{{ item.category.name }}</td>
-                            <td>
-                                <div class="stock-cell">
-                                    <div class="stock-level">
-                                        <div class="stock-progress
-                                            {% if item.stock <= 5 %}progress-low
-                                            {% elif item.stock <= 12 %}progress-medium
-                                            {% else %}progress-high{% endif %}"></div>
-                                    </div>
-                                    <span class="stock-value">{{ item.stock }}</span>
-                                </div>
-                            </td>
-                            <td>${{ item.price }}</td>
-                            <td>
-                                <span class="status-badge
-                                    {% if item.status == 1 %}status-active
-                                    {% elif item.status == 2 %}status-inactive
-                                    {% else %}status-draft{% endif %}">
-                                    {{ item.get_status_display }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{% url 'view_inventory' item.id %}" class="action-btn" title="View"><i class="fas fa-eye"></i></a>
-                                <a href="{% url 'restock_inventory' item.id %}" class="action-btn" title="Restock"><i class="fas fa-boxes"></i></a>
-                                <a href="{% url 'edit_inventory' item.id %}" class="action-btn" title="Edit"><i class="fas fa-edit"></i></a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="7">No inventory items found.</td>
-                        </tr>
+            <!-- Inventory Form -->
+            <div class="inventory-form">
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </div>
+                {% endif %}
 
-                <!-- Pagination -->
-                <div class="table-footer">
-                    <div class="results-count">
-                        Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} items
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.product.id_for_label }}">Product</label>
+                        {{ form.product }}
                     </div>
-                    <div class="pagination">
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}" class="page-btn"><i class="fas fa-chevron-left"></i></a>
-                        {% endif %}
-                        {% for num in page_obj.paginator.page_range %}
-                            <a href="?page={{ num }}" class="page-btn {% if page_obj.number == num %}active{% endif %}">{{ num }}</a>
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}" class="page-btn"><i class="fas fa-chevron-right"></i></a>
-                        {% endif %}
+                    <div class="form-group">
+                        <label for="{{ form.title.id_for_label }}">Title</label>
+                        {{ form.title }}
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}">Category</label>
+                        {{ form.category }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.price.id_for_label }}">Price</label>
+                        {{ form.price }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.stock.id_for_label }}">Stock</label>
+                        {{ form.stock }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.status.id_for_label }}">Status</label>
+                        {{ form.status }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.code.id_for_label }}">SKU</label>
+                        {{ form.code }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.size.id_for_label }}">Size</label>
+                        {{ form.size }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.color.id_for_label }}">Color</label>
+                        {{ form.color }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Inventory
+                    </button>
+                    <a href="{% url 'inventory' %}" class="btn btn-secondary">Cancel</a>
+                </form>
             </div>
         </div>
     </div>

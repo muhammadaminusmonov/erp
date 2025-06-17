@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customers | StitchERP</title>
     <style>
+        /* Avvalgi CSS kodlari shu yerga joylashtiriladi */
         :root {
             --primary: #6C4AB6;
             --secondary: #8D72E1;
@@ -16,68 +18,62 @@
             --danger: #DC3545;
             --info: #17A2B8;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: var(--dark);
         }
-        
+
         .dashboard {
             display: grid;
             grid-template-columns: 250px 1fr;
             min-height: 100vh;
         }
-        
-        /* Sidebar (same as dashboard) */
+
         .sidebar {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             color: white;
             padding: 2rem 1rem;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             margin-bottom: 2rem;
             padding-left: 1rem;
         }
-        
-        .logo img {
-            width: 40px;
-            margin-right: 10px;
-        }
-        
+
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 700;
         }
-        
+
         .nav-menu {
             list-style: none;
         }
-        
+
         .nav-item {
             margin-bottom: 0.5rem;
             border-radius: 8px;
             transition: all 0.3s ease;
         }
-        
+
         .nav-item:hover {
             background-color: rgba(255,255,255,0.1);
         }
-        
+
         .nav-item.active {
             background-color: rgba(255,255,255,0.2);
         }
-        
+
         .nav-link {
             display: flex;
             align-items: center;
@@ -86,61 +82,55 @@
             text-decoration: none;
             font-weight: 500;
         }
-        
+
         .nav-link i {
             margin-right: 10px;
             font-size: 1.1rem;
         }
-        
-        /* Main Content */
+
         .main-content {
             padding: 2rem;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
         }
-        
+
         .page-title h2 {
             font-size: 1.8rem;
             color: var(--dark);
         }
-        
+
         .user-profile {
             display: flex;
             align-items: center;
         }
-        
-        .user-profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+
+        .user-profile span {
             margin-right: 10px;
-            object-fit: cover;
         }
-        
-        /* Customers Page Specific Styles */
+
         .customers-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .customer-tools {
             display: flex;
             gap: 1rem;
             align-items: center;
         }
-        
+
         .search-bar {
             position: relative;
             width: 300px;
         }
-        
+
         .search-bar input {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 2.5rem;
@@ -149,13 +139,13 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
         }
-        
+
         .search-bar input:focus {
             outline: none;
             border-color: var(--secondary);
             box-shadow: 0 0 0 3px rgba(140, 114, 225, 0.2);
         }
-        
+
         .search-bar i {
             position: absolute;
             left: 1rem;
@@ -163,11 +153,11 @@
             transform: translateY(-50%);
             color: #6c757d;
         }
-        
+
         .filter-dropdown {
             position: relative;
         }
-        
+
         .filter-btn {
             padding: 0.75rem 1rem;
             background: white;
@@ -179,7 +169,7 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        
+
         .btn {
             padding: 0.5rem 1rem;
             border-radius: 8px;
@@ -188,24 +178,23 @@
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: #5a3d9d;
         }
-        
-        /* Customer Segments */
+
         .customer-segments {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
-        
+
         .segment-card {
             background: white;
             border-radius: 12px;
@@ -213,17 +202,17 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             transition: transform 0.3s ease;
         }
-        
+
         .segment-card:hover {
             transform: translateY(-3px);
         }
-        
+
         .segment-header {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
         }
-        
+
         .segment-icon {
             width: 40px;
             height: 40px;
@@ -233,56 +222,55 @@
             justify-content: center;
             margin-right: 1rem;
         }
-        
+
         .icon-new {
             background-color: rgba(108, 74, 182, 0.1);
             color: var(--primary);
         }
-        
+
         .icon-regular {
             background-color: rgba(76, 175, 80, 0.1);
             color: var(--success);
         }
-        
+
         .icon-vip {
             background-color: rgba(255, 193, 7, 0.1);
             color: var(--warning);
         }
-        
+
         .icon-inactive {
             background-color: rgba(220, 53, 69, 0.1);
             color: var(--danger);
         }
-        
+
         .segment-info h3 {
             font-size: 0.95rem;
             color: #6c757d;
             margin-bottom: 0.25rem;
         }
-        
+
         .segment-info .value {
             font-size: 1.5rem;
             font-weight: 700;
         }
-        
-        /* Customers Table */
+
         .customers-table {
             background: white;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         thead {
             background-color: #f8f9fa;
             border-bottom: 1px solid #f1f1f1;
         }
-        
+
         th {
             padding: 1rem;
             text-align: left;
@@ -292,23 +280,23 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         td {
             padding: 1rem;
             border-bottom: 1px solid #f1f1f1;
             font-size: 0.9rem;
         }
-        
+
         tr:last-child td {
             border-bottom: none;
         }
-        
+
         .customer-cell {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        
+
         .customer-avatar {
             width: 40px;
             height: 40px;
@@ -321,59 +309,59 @@
             color: var(--primary);
             font-weight: 600;
         }
-        
+
         .customer-info h4 {
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
         }
-        
+
         .customer-info p {
             font-size: 0.8rem;
             color: #6c757d;
         }
-        
+
         .segment-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
         }
-        
+
         .segment-new {
             background-color: rgba(108, 74, 182, 0.1);
             color: var(--primary);
         }
-        
+
         .segment-regular {
             background-color: rgba(76, 175, 80, 0.1);
             color: var(--success);
         }
-        
+
         .segment-vip {
             background-color: rgba(255, 193, 7, 0.1);
             color: var(--warning);
         }
-        
+
         .segment-inactive {
             background-color: rgba(220, 53, 69, 0.1);
             color: var(--danger);
         }
-        
+
         .stats-cell {
             display: flex;
             flex-direction: column;
         }
-        
+
         .stat-value {
             font-weight: 600;
             margin-bottom: 0.1rem;
         }
-        
+
         .stat-label {
             font-size: 0.75rem;
             color: #6c757d;
         }
-        
+
         .action-btn {
             background: none;
             border: none;
@@ -383,11 +371,11 @@
             margin-right: 0.75rem;
             transition: color 0.3s ease;
         }
-        
+
         .action-btn:hover {
             color: var(--primary);
         }
-        
+
         .table-footer {
             display: flex;
             justify-content: space-between;
@@ -396,12 +384,12 @@
             background-color: #f8f9fa;
             border-top: 1px solid #f1f1f1;
         }
-        
+
         .pagination {
             display: flex;
             gap: 0.5rem;
         }
-        
+
         .page-btn {
             width: 32px;
             height: 32px;
@@ -414,23 +402,22 @@
             cursor: pointer;
             font-size: 0.8rem;
         }
-        
+
         .page-btn.active {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
         }
-        
+
         .page-btn:hover:not(.active) {
             background-color: #f1f1f1;
         }
-        
+
         .results-count {
             font-size: 0.85rem;
             color: #6c757d;
         }
-        
-        /* Customer Activity Chart */
+
         .customer-activity {
             background: white;
             border-radius: 12px;
@@ -438,24 +425,76 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             margin-bottom: 1.5rem;
         }
-        
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.page-btn:hover:not(.active):not(.ellipsis) {
+    background: #f0f0f0;
+    color: #6C4AB6;
+}
+
+.page-btn.active {
+    background: #6C4AB6;
+    color: #fff;
+    border-color: #6C4AB6;
+    font-weight: 600;
+}
+
+.page-btn.prev, .page-btn.next {
+    border-radius: 50%;
+}
+
+.page-btn.ellipsis {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: default;
+    pointer-events: none;
+}
+
+.page-btn.ellipsis:hover {
+    background: none;
+}
         .activity-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .activity-header h3 {
             font-size: 1.2rem;
             font-weight: 600;
         }
-        
+
         .activity-period {
             display: flex;
             gap: 0.5rem;
         }
-        
+
         .period-btn {
             padding: 0.5rem 1rem;
             border-radius: 6px;
@@ -464,13 +503,13 @@
             cursor: pointer;
             font-size: 0.85rem;
         }
-        
+
         .period-btn.active {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
         }
-        
+
         .chart-placeholder {
             height: 250px;
             background-color: #f8f9fa;
@@ -488,44 +527,38 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="logo">
-<!--                <img src="https://via.placeholder.com/40" alt="StitchERP Logo">-->
                 <h1>StitchERP</h1>
             </div>
 
             <ul class="nav-menu">
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a href="{% url 'dashboard' %}" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        Dashboard
+                        <i class="fas fa-home"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'product' %}" class="nav-link">
-                        <i class="fas fa-tshirt"></i>
-                        Products
+                        <i class="fas fa-tshirt"></i> Products
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'order' %}" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        Orders
+                    <a href="{% url 'order_list' %}" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i> Orders
                     </a>
                 </li>
                 <li class="nav-item active">
                     <a href="{% url 'customer' %}" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        Customers
+                        <i class="fas fa-users"></i> Customers
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'inventory' %}" class="nav-link">
-                        <i class="fas fa-boxes"></i>
-                        Inventory
+                        <i class="fas fa-boxes"></i> Inventory
                     </a>
                 </li>
             </ul>
         </div>
-        
+
         <!-- Main Content -->
         <div class="main-content">
             <div class="header">
@@ -533,13 +566,12 @@
                     <h2>Customer Management</h2>
                     <p>View and manage your customer database and segments</p>
                 </div>
-                
+
                 <div class="user-profile">
-                    <!--                    <img src="https://via.placeholder.com/40" alt="User Profile">-->
-                    <span>Usmonov Muhammadamin</span>
+                    <span>{{ user.get_full_name|default:user.username }}</span>
                 </div>
             </div>
-            
+
             <!-- Customer Activity Chart -->
             <div class="customer-activity">
                 <div class="activity-header">
@@ -550,12 +582,12 @@
                         <button class="period-btn">Year</button>
                     </div>
                 </div>
-                
+
                 <div class="chart-placeholder">
                     [Customer Acquisition Chart Visualization]
                 </div>
             </div>
-            
+
             <!-- Customer Segments -->
             <div class="customer-segments">
                 <div class="segment-card">
@@ -565,11 +597,11 @@
                         </div>
                         <div class="segment-info">
                             <h3>New Customers</h3>
-                            <div class="value">24</div>
+                            <div class="value">{{ new_customers }}</div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="segment-card">
                     <div class="segment-header">
                         <div class="segment-icon icon-regular">
@@ -577,11 +609,11 @@
                         </div>
                         <div class="segment-info">
                             <h3>Regular Customers</h3>
-                            <div class="value">156</div>
+                            <div class="value">{{ regular_customers }}</div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="segment-card">
                     <div class="segment-header">
                         <div class="segment-icon icon-vip">
@@ -589,11 +621,11 @@
                         </div>
                         <div class="segment-info">
                             <h3>VIP Customers</h3>
-                            <div class="value">32</div>
+                            <div class="value">{{ vip_customers }}</div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="segment-card">
                     <div class="segment-header">
                         <div class="segment-icon icon-inactive">
@@ -601,19 +633,19 @@
                         </div>
                         <div class="segment-info">
                             <h3>Inactive Customers</h3>
-                            <div class="value">45</div>
+                            <div class="value">{{ inactive_customers }}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="customers-header">
                 <div class="customer-tools">
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search customers...">
+                        <input type="text" placeholder="Search customers..." name="q">
                     </div>
-                    
+
                     <div class="filter-dropdown">
                         <button class="filter-btn">
                             <i class="fas fa-filter"></i>
@@ -622,13 +654,12 @@
                         </button>
                     </div>
                 </div>
-                
-                <button class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Add Customer
-                </button>
+
+                <a href="{% url 'add_customer' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Customer
+                </a>
             </div>
-            
+
             <div class="customers-table">
                 <table>
                     <thead>
@@ -642,173 +673,77 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for customer in customers %}
                         <tr>
                             <td>
                                 <div class="customer-cell">
-                                    <div class="customer-avatar">JD</div>
+                                    <div class="customer-avatar">{{ customer.first_name|slice:"0:1" }}{{ customer.last_name|slice:"0:1" }}</div>
                                     <div class="customer-info">
-                                        <h4>John Doe</h4>
-                                        <p>john@example.com</p>
+                                        <h4>{{ customer.first_name }} {{ customer.last_name }}</h4>
+                                        <p>{{ customer.email }}</p>
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="segment-badge segment-vip">VIP</span></td>
+                            <td>
+                                <span class="segment-badge
+                                    {% if customer.segment == '1' %}segment-new
+                                    {% elif customer.segment == '2' %}segment-regular
+                                    {% elif customer.segment == '3' %}segment-vip
+                                    {% else %}segment-inactive{% endif %}">
+                                    {{ customer.get_segment_display }}
+                                </span>
+                            </td>
                             <td>
                                 <div class="stats-cell">
-                                    <span class="stat-value">12</span>
-                                    <span class="stat-label">5 this month</span>
+                                    <span class="stat-value">{{ customer.orders }}</span>
+                                    <span class="stat-label">{{ customer.orders_this_month }} this month</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="stats-cell">
-                                    <span class="stat-value">$1,842</span>
-                                    <span class="stat-label">$489 this month</span>
+                                    <span class="stat-value">${{ customer.total_spent }}</span>
+                                    <span class="stat-label">${{ customer.spent_this_month }} this month</span>
                                 </div>
                             </td>
-                            <td>Jun 14, 2023</td>
+                            <td>{{ customer.last_update|date:"M d, Y" }}</td>
                             <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                <a href="{% url 'view_customer' customer.id %}" class="action-btn" title="View"><i class="fas fa-eye"></i></a>
+                                <a href="{% url 'message_customer' customer.id %}" class="action-btn" title="Message"><i class="fas fa-envelope"></i></a>
+                                <a href="{% url 'edit_customer' customer.id %}" class="action-btn" title="Edit"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
+                        {% empty %}
                         <tr>
-                            <td>
-                                <div class="customer-cell">
-                                    <img src="https://via.placeholder.com/40" class="customer-avatar" alt="Customer">
-                                    <div class="customer-info">
-                                        <h4>Alice Smith</h4>
-                                        <p>alice@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="segment-badge segment-regular">Regular</span></td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">6</span>
-                                    <span class="stat-label">2 this month</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">$489</span>
-                                    <span class="stat-label">$149 this month</span>
-                                </div>
-                            </td>
-                            <td>Jun 10, 2023</td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
+                            <td colspan="6">No customers found.</td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">RJ</div>
-                                    <div class="customer-info">
-                                        <h4>Robert Johnson</h4>
-                                        <p>robert@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="segment-badge segment-new">New</span></td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">1</span>
-                                    <span class="stat-label">1 this month</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">$129</span>
-                                    <span class="stat-label">$129 this month</span>
-                                </div>
-                            </td>
-                            <td>Jun 8, 2023</td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">MB</div>
-                                    <div class="customer-info">
-                                        <h4>Maria Brown</h4>
-                                        <p>maria@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="segment-badge segment-regular">Regular</span></td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">8</span>
-                                    <span class="stat-label">1 this month</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">$672</span>
-                                    <span class="stat-label">$95 this month</span>
-                                </div>
-                            </td>
-                            <td>May 28, 2023</td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="customer-cell">
-                                    <div class="customer-avatar">DW</div>
-                                    <div class="customer-info">
-                                        <h4>David Wilson</h4>
-                                        <p>david@example.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="segment-badge segment-inactive">Inactive</span></td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">3</span>
-                                    <span class="stat-label">0 this month</span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="stats-cell">
-                                    <span class="stat-value">$247</span>
-                                    <span class="stat-label">$0 this month</span>
-                                </div>
-                            </td>
-                            <td>Mar 15, 2023</td>
-                            <td>
-                                <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                <button class="action-btn" title="Message"><i class="fas fa-envelope"></i></button>
-                                <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                
-                <div class="table-footer">
-                    <div class="results-count">
-                        Showing 1 to 5 of 257 customers
-                    </div>
-                    
-                    <div class="pagination">
-                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <button class="page-btn">4</button>
-                        <button class="page-btn">5</button>
-                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                    </div>
+
+                <div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="page-btn prev"><i class="fas fa-chevron-left"></i></a>
+    {% endif %}
+
+    {% with total_pages=page_obj.paginator.num_pages current_page=page_obj.number %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if num <= 7 or num == total_pages or num|add:"-2" <= current_page and num|add:"2" >= current_page %}
+                <a href="?page={{ num }}" class="page-btn {% if num == current_page %}active{% endif %}">{{ num }}</a>
+            {% elif num == 8 and current_page > 7 %}
+                <span class="page-btn ellipsis">...</span>
+            {% endif %}
+        {% endfor %}
+
+        {% if total_pages > 10 and current_page < total_pages|add:"-2" %}
+            <span class="page-btn ellipsis">...</span>
+            <a href="?page={{ total_pages }}" class="page-btn {% if num == current_page %}active{% endif %}">{{ total_pages }}</a>
+        {% endif %}
+    {% endwith %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="page-btn next"><i class="fas fa-chevron-right"></i></a>
+    {% endif %}
+</div>
                 </div>
             </div>
         </div>

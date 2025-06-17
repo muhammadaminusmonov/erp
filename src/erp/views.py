@@ -7,7 +7,6 @@ from order.models import Order, OrderItem
 from product.models import Product
 from inventory.models import Inventory
 
-
 def dashboard(request):
     # Calculate time ranges
     today = timezone.now().date()
@@ -15,32 +14,33 @@ def dashboard(request):
     month_ago = today - timedelta(days=30)
     year_ago = today - timedelta(days=365)
 
-    # Sales metrics
-    total_revenue = Order.objects.aggregate(total=Sum('total'))['total'] or 0
-    today_revenue = Order.objects.filter(date__date=today).aggregate(total=Sum('total'))['total'] or 0
-    week_revenue = Order.objects.filter(date__date__gte=week_ago).aggregate(total=Sum('total'))['total'] or 0
-    month_revenue = Order.objects.filter(date__date__gte=month_ago).aggregate(total=Sum('total'))['total'] or 0
+    # Sales metrics - total o'rniga total_amount ishlating
+    total_revenue = Order.objects.aggregate(total=Sum('total_amount'))['total'] or 0
+    today_revenue = Order.objects.filter(created_at__date=today).aggregate(total=Sum('total_amount'))['total'] or 0
+    week_revenue = Order.objects.filter(created_at__date__gte=week_ago).aggregate(total=Sum('total_amount'))['total'] or 0
+    month_revenue = Order.objects.filter(created_at__date__gte=month_ago).aggregate(total=Sum('total_amount'))['total'] or 0
 
-    # Order metrics
+    # Order metrics - date o'rniga created_at ishlating
     total_orders = Order.objects.count()
-    today_orders = Order.objects.filter(date__date=today).count()
-    week_orders = Order.objects.filter(date__date__gte=week_ago).count()
-    month_orders = Order.objects.filter(date__date__gte=month_ago).count()
+    today_orders = Order.objects.filter(created_at__date=today).count()
+    week_orders = Order.objects.filter(created_at__date__gte=week_ago).count()
+    month_orders = Order.objects.filter(created_at__date__gte=month_ago).count()
 
     # Customer metrics
     total_customers = Customer.objects.count()
-    new_customers = Customer.objects.filter(last_update__date__gte=month_ago).count()
+    # last_update maydoni borligiga ishonch hosil qiling, yo'q bo'lsa created_at ishlating
+    new_customers = Customer.objects.filter(join_date__date__gte=month_ago).count()
 
     # Inventory alerts
     low_stock_items = Inventory.objects.filter(stock__lt=10, status=1).count()
 
-    # Recent orders (last 5)
-    recent_orders = Order.objects.select_related('customer').prefetch_related('items').order_by('-date')[:5]
+    # Recent orders (last 5) - date o'rniga created_at ishlating
+    recent_orders = Order.objects.select_related('customer').prefetch_related('order_items').order_by('-created_at')[:5]
 
     # Inventory alerts (items with low stock)
     inventory_alerts = Inventory.objects.filter(stock__lt=10, status=1).select_related('product')[:5]
 
-    # Customer segments
+    # Customer segments - segment maydoni borligiga ishonch hosil qiling
     customer_segments = {
         'new': Customer.objects.filter(segment='1').count(),
         'regular': Customer.objects.filter(segment='2').count(),
@@ -48,21 +48,19 @@ def dashboard(request):
         'inactive': Customer.objects.filter(segment='4').count(),
     }
 
-
-
     # Sales performance data for charts
-    # Weekly sales data (last 7 days)
+    # Weekly sales data (last 7 days) - date o'rniga created_at ishlating
     weekly_sales = Order.objects.filter(
-        date__date__gte=week_ago
-    ).values('date__date').annotate(
-        total=Sum('total')
-    ).order_by('date__date')
+        created_at__date__gte=week_ago
+    ).values('created_at__date').annotate(
+        total=Sum('total_amount')  # total o'rniga total_amount
+    ).order_by('created_at__date')
 
-    # Monthly sales data (last 30 days grouped by week)
+    # Monthly sales data (last 30 days grouped by week) - date o'rniga created_at
     month_start = today - timedelta(days=30)
     monthly_sales_raw = Order.objects.filter(
-        date__date__gte=month_start
-    ).values_list('date', 'total')
+        created_at__date__gte=month_start
+    ).values_list('created_at', 'total_amount')  # total o'rniga total_amount
 
     # Group by week in Python
     monthly_sales_by_week = {}
@@ -77,7 +75,7 @@ def dashboard(request):
     weekly_data = [0] * 7
 
     for sale in weekly_sales:
-        sale_date = sale['date__date']
+        sale_date = sale['created_at__date']  # date o'rniga created_at
         day_index = (today - sale_date).days
         if 0 <= day_index <= 6:
             weekly_data[6 - day_index] = float(sale['total'] or 0)
@@ -91,14 +89,12 @@ def dashboard(request):
         week_num = current_week + i  # Get following weeks
         week_label = f"Week {i + 1}"
         monthly_labels.append(week_label)
-
-        # Find sales for this week
         monthly_data[i] = float(monthly_sales_by_week.get(week_num, 0))
 
-    # Prepare yearly chart data (last 12 months)
+    # Prepare yearly chart data (last 12 months) - date o'rniga created_at
     yearly_sales_raw = Order.objects.filter(
-        date__date__gte=year_ago
-    ).values_list('date', 'total')
+        created_at__date__gte=year_ago
+    ).values_list('created_at', 'total_amount')  # total o'rniga total_amount
 
     yearly_sales = {month: 0 for month in range(1, 13)}
     for date, total in yearly_sales_raw:
@@ -108,8 +104,6 @@ def dashboard(request):
     yearly_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     yearly_data = [yearly_sales.get(month, 0) for month in range(1, 13)]
-
-
 
     context = {
         # Stats cards data
@@ -165,16 +159,11 @@ def dashboard(request):
                     'last_name': order.customer.last_name,
                     'email': order.customer.email,
                 },
-                'products': order.items.all()[:3],  # Show first 3 products
-                'total': order.total,
-                'date': order.date.strftime('%b %d, %Y'),
-                'status': dict(Order.STATUS).get(order.status, 'Pending'),
-                'status_class': {
-                    1: 'completed',
-                    2: 'cancelled',
-                    3: 'processing',
-                    4: 'pending',
-                }.get(order.status, 'pending'),
+                'products': order.order_items.all()[:3],
+                'total': order.total_amount,  # total o'rniga total_amount
+                'date': order.created_at.strftime('%b %d, %Y'),  # date o'rniga created_at
+                'status': order.get_status_display(),
+                'status_class': order.get_status_class(),
             }
             for order in recent_orders
         ],
@@ -187,7 +176,7 @@ def dashboard(request):
                     'category': item.product.category.name,
                 },
                 'stock': item.stock,
-                'status': dict(Inventory.STATUS).get(item.status, 'Active'),
+                'status': item.get_status_display(),
                 'status_class': {
                     1: 'active',
                     2: 'out_of_stock',

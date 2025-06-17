@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice #{{ order.id }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .invoice-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .company-info h1 { margin: 0; color: #333; }
+        .invoice-info { text-align: right; }
+        .section { margin-bottom: 20px; }
+        .section-title { border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px; }
+        .customer-details, .order-details { width: 100%; border-collapse: collapse; }
+        .customer-details td, .order-details td { padding: 8px; vertical-align: top; }
+        .items-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .items-table th, .items-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .items-table th { background-color: #f2f2f2; }
+        .summary { margin-top: 30px; text-align: right; }
+        .footer { margin-top: 50px; text-align: center; font-size: 0.8em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <div class="company-info">
+                <h1>StitchERP</h1>
+                <p>123 Business Street</p>
+                <p>New York, NY 10001</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div class="invoice-info">
+                <h2>INVOICE</h2>
+                <p><strong>Invoice #:</strong> INV-{{ order.id }}</p>
+                <p><strong>Date:</strong> {{ order.created_at|date:"M d, Y" }}</p>
+                <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Customer Information</h3>
+            <table class="customer-details">
+                <tr>
+                    <td width="50%">
+                        <strong>Bill To:</strong><br>
+                        {{ order.customer.first_name }} {{ order.customer.last_name }}<br>
+                        {{ order.customer.email }}<br>
+                        {{ order.customer.phone|default:"N/A" }}
+                    </td>
+                    <td width="50%">
+                        <strong>Ship To:</strong><br>
+                        {{ order.shipping_address|default:"Same as billing address" }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Order Items</h3>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>${{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.get_item_total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="summary">
+            <p><strong>Subtotal:</strong> ${{ order.subtotal|default:0 }}</p>
+            <p><strong>Shipping:</strong> ${{ order.shipping_cost|default:0 }}</p>
+            <p><strong>Tax:</strong> ${{ order.tax_amount|default:0 }}</p>
+            <p><strong>Discount:</strong> -${{ order.discount_amount|default:0 }}</p>
+            <p><strong>Total:</strong> ${{ order.total_amount }}</p>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for your business!</p>
+            <p>StitchERP - Enterprise Resource Planning Solution</p>
+        </div>
+    </div>
+</body>
+</html>

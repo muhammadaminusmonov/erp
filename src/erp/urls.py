@@ -23,6 +23,6 @@ urlpatterns = [
     path('', dashboard, name='dashboard'),
     path('customer/', include('customer.urls')),
     path('inventory/', include('inventory.urls')),
-    path('order/', include('order.urls')),
+    path('orders/', include('order.urls')),
     path('product/', include('product.urls')),
 ]

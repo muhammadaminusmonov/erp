@@ -1,0 +1,19 @@
+{% extends "base.html" %} <!-- If you have a base template -->
+{% block content %}
+<div class="dashboard">
+    <!-- Sidebar same as your order_list.html -->
+    <div class="main-content">
+        <div class="header">
+            <h2>{% if object %}Edit Order{% else %}Create New Order{% endif %}</h2>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">
+                {% if object %}Update Order{% else %}Create Order{% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
