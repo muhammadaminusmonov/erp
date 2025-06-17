@@ -11,7 +11,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
-    segment = models.CharField(choices=SEGMENT, max_length=1)
+    segment = models.SmallIntegerField(choices=SEGMENT, max_length=1, default=1)
     orders = models.IntegerField(default=0)
     total_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     last_update = models.DateTimeField(auto_now=True)
