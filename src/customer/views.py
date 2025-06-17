@@ -85,7 +85,7 @@ def add_customer(request):
             messages.success(request, 'Customer added successfully!')
             return redirect('customer')
         else:
-            messages.error(request, form.errors)
+            messages.error(request, form)
     else:
         form = CustomerForm()
 
