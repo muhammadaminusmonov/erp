@@ -10,10 +10,10 @@ class Order(models.Model):
         ('cancelled', 'Cancelled'),
     )
     PAYMENT_CHOICES = (
-        ('unpaid', 'Unpaid'),
-        ('paid', 'Paid'),
+        (1, 'Unpaid'),
+        (2, 'Paid'),
     )
-    payment_status = models.CharField(max_length=20, choices=PAYMENT_CHOICES, default='unpaid', null=False, blank=False)
+    payment_status = models.SmallIntegerField(max_length=20, choices=PAYMENT_CHOICES, default=1, null=False, blank=False)
     shipping_address = models.TextField(blank=True)
     billing_address = models.TextField(blank=True)
     notes = models.TextField(blank=True)
@@ -47,7 +47,6 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)  # product price at the time of order
     quantity = models.PositiveIntegerField(default=1)
