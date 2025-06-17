@@ -221,7 +221,7 @@ class OrderCreateView(CreateView):
         customer_id = request.POST.get('customer')
         order_date = request.POST.get('order_date')
         status = request.POST.get('status')
-        payment_status = request.POST.get('payment_status')
+        payment_status = request.POST.get('payment_status') or 1
         shipping_address = request.POST.get('shipping_address', '')
         billing_address = request.POST.get('billing_address', '')
         notes = request.POST.get('notes', '')
